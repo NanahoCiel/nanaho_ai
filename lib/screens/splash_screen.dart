@@ -1,16 +1,7 @@
 // lib/screens/splash_screen.dart
 import 'dart:async';
 import 'package:flutter/material.dart';
-import '../providers/user_provider.dart';
-
-class GoldColors {
-  static const Color gold = Color(0xFFD4AF37);
-  static const Color goldLight = Color(0xFFFFD700);
-  static const Color goldDark = Color(0xFFB8860B);
-  static const Color bg = Color(0xFF121212);
-  static const Color card = Color(0xFF1E1E1E);
-}
-
+import '../theme.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
@@ -59,3 +50,4 @@ class _SplashScreenState extends State<SplashScreen> {
     );
   }
 }
+

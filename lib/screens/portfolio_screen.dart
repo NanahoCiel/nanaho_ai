@@ -2,15 +2,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../providers/user_provider.dart';
-
-class GoldColors {
-  static const Color gold = Color(0xFFD4AF37);
-  static const Color goldLight = Color(0xFFFFD700);
-  static const Color goldDark = Color(0xFFB8860B);
-  static const Color bg = Color(0xFF121212);
-  static const Color card = Color(0xFF1E1E1E);
-}
-
+import '../theme.dart';
 
 class PortfolioScreen extends StatelessWidget {
   const PortfolioScreen({super.key});
@@ -33,7 +25,7 @@ class PortfolioScreen extends StatelessWidget {
                       child: const Icon(Icons.trending_up, color: GoldColors.gold),
                     ),
                     title: Text(h.symbol),
-                    subtitle: Text('평단가: {krw(h.avgPriceKRW)}  ·  수량: {formatNumber(h.quantity, decimals: 4)}'),
+                    subtitle: Text('평단가: ${krw(h.avgPriceKRW)}  ·  수량: ${formatNumber(h.quantity, decimals: 4)}'),
                     trailing: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       crossAxisAlignment: CrossAxisAlignment.end,
@@ -41,7 +33,8 @@ class PortfolioScreen extends StatelessWidget {
                         Text(krw(h.quantity * h.avgPriceKRW),
                             style: const TextStyle(color: GoldColors.gold, fontWeight: FontWeight.w700)),
                         const SizedBox(height: 4),
-                        Text(h.type == AssetType.stock ? '주식' : '코인', style: const TextStyle(color: Colors.white70)),
+                        Text(h.type == AssetType.stock ? '주식' : '코인',
+                            style: const TextStyle(color: Colors.white70)),
                       ],
                     ),
                   ),
@@ -77,3 +70,8 @@ class _EmptyState extends StatelessWidget {
     );
   }
 }
+
+String formatNumber(double value, {int decimals = 2}) {
+  return value.toStringAsFixed(decimals);
+}
+

@@ -3,15 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../providers/user_provider.dart';
 import '../services/iap_service.dart';
-
-class GoldColors {
-  static const Color gold = Color(0xFFD4AF37);
-  static const Color goldLight = Color(0xFFFFD700);
-  static const Color goldDark = Color(0xFFB8860B);
-  static const Color bg = Color(0xFF121212);
-  static const Color card = Color(0xFF1E1E1E);
-}
-
+import '../services/ad_service.dart';
+import '../theme.dart';
 
 class ShopScreen extends StatelessWidget {
   const ShopScreen({super.key});
@@ -19,43 +12,53 @@ class ShopScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final user = context.watch<UserProvider>();
+    final options = [
+      {'price': 1000, 'reward': 10000000},
+      {'price': 2000, 'reward': 20000000},
+      {'price': 5000, 'reward': 50000000},
+      {'price': 10000, 'reward': 100000000},
+    ];
     return Scaffold(
       appBar: AppBar(title: const Text('상점')),
       body: ListView(
         padding: const EdgeInsets.all(12),
         children: [
+          Card(
+            child: ListTile(
+              title: const Text('광고 시청'),
+              subtitle: const Text('시청 시 200,000원 지급'),
+              trailing: ElevatedButton(
+                onPressed: () => AdService.showRewarded(context, onReward: () {
+                  context.read<UserProvider>().addCapitalKRW(200000);
+                }),
+                child: const Text('보기'),
+              ),
+            ),
+          ),
+          Card(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                const Padding(
+                  padding: EdgeInsets.all(16),
+                  child: Text('자본 충전', style: TextStyle(fontSize: 16, fontWeight: FontWeight.w700)),
+                ),
+                for (final o in options)
+                  ListTile(
+                    title: Text('${krw((o['price'] as int).toDouble())} → ${krw((o['reward'] as int).toDouble())}'),
+                    trailing: ElevatedButton(
+                      onPressed: () => IapService.buyCapital(context, (o['reward'] as int).toDouble()),
+                      child: const Text('구매'),
+                    ),
+                  ),
+              ],
+            ),
+          ),
           _PremiumTile(
-            title: '광고 제거 (Premium)',
+            title: '광고 제거',
             active: user.premiumNoAds,
             onBuy: () => IapService.buyPremiumNoAds(context),
           ),
-          _PremiumTile(
-            title: '거래 수수료 0%',
-            active: user.zeroFee,
-            onBuy: () => IapService.buyZeroFee(context),
-          ),
-          Card(
-            child: Padding(
-              padding: const EdgeInsets.all(16),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  const Text('자본 추가', style: TextStyle(fontSize: 16, fontWeight: FontWeight.w700)),
-                  const SizedBox(height: 8),
-                  Wrap(
-                    spacing: 8,
-                    children: [
-                      for (final amt in [100000, 500000, 1000000, 5000000])
-                        OutlinedButton(
-                          onPressed: () => IapService.buyCapital(context, amt.toDouble()),
-                          child: Text(krw(amt.toDouble())),
-                        ),
-                    ],
-                  )
-                ],
-              ),
-            ),
-          )
         ],
       ),
     );
@@ -84,3 +87,4 @@ class _PremiumTile extends StatelessWidget {
     );
   }
 }
+

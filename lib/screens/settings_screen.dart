@@ -4,15 +4,7 @@ import 'package:adaptive_theme/adaptive_theme.dart';
 import 'package:provider/provider.dart';
 import '../providers/user_provider.dart';
 import '../services/reset_service.dart';
-
-class GoldColors {
-  static const Color gold = Color(0xFFD4AF37);
-  static const Color goldLight = Color(0xFFFFD700);
-  static const Color goldDark = Color(0xFFB8860B);
-  static const Color bg = Color(0xFF121212);
-  static const Color card = Color(0xFF1E1E1E);
-}
-
+import '../theme.dart';
 
 class SettingsScreen extends StatelessWidget {
   const SettingsScreen({super.key});
@@ -56,3 +48,4 @@ class SettingsScreen extends StatelessWidget {
     );
   }
 }
+
