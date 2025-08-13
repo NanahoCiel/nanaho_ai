@@ -12,14 +12,6 @@ class IapService {
     );
   }
 
-  static Future<void> buyZeroFee(BuildContext context) async {
-    final user = context.read<UserProvider>();
-    user.grantZeroFee();
-    ScaffoldMessenger.of(context).showSnackBar(
-      const SnackBar(content: Text('거래 수수료 0% 활성화됨')),
-    );
-  }
-
   static Future<void> buyCapital(BuildContext context, double amount) async {
     final user = context.read<UserProvider>();
     user.addCapitalKRW(amount);

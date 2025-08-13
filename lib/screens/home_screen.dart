@@ -2,15 +2,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../providers/user_provider.dart';
-
-class GoldColors {
-  static const Color gold = Color(0xFFD4AF37);
-  static const Color goldLight = Color(0xFFFFD700);
-  static const Color goldDark = Color(0xFFB8860B);
-  static const Color bg = Color(0xFF121212);
-  static const Color card = Color(0xFF1E1E1E);
-}
-
+import '../theme.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
@@ -54,17 +46,12 @@ class HomeScreen extends StatelessWidget {
           const SizedBox(height: 12),
           Card(
             child: ListTile(
-              title: const Text('프리미엄 (광고 제거)'), 
+              title: const Text('프리미엄 (광고 제거)'),
               subtitle: Text(user.premiumNoAds ? '활성화됨' : '미구매'),
-              trailing: Icon(user.premiumNoAds ? Icons.check_circle : Icons.workspace_premium,
-                  color: GoldColors.gold),
-            ),
-          ),
-          Card(
-            child: ListTile(
-              title: const Text('거래 수수료'), 
-              subtitle: Text(user.zeroFee ? '0%' : '0.25% 기본'),
-              trailing: Icon(user.zeroFee ? Icons.check_circle : Icons.percent, color: GoldColors.gold),
+              trailing: Icon(
+                user.premiumNoAds ? Icons.check_circle : Icons.workspace_premium,
+                color: GoldColors.gold,
+              ),
             ),
           ),
         ],
@@ -147,3 +134,4 @@ class _ActionButton extends StatelessWidget {
     );
   }
 }
+
